@@ -11,3 +11,11 @@ Simple C++ Boost Arduino serial communication.
 
 * GCC compiler
 * Boost C++ Libraries
+
+## Inspiration and thanks
+
+Many thanks to
+[Webalice](http://www.webalice.it/fede.tft/serial_port/serial_port.html)
+and 
+[Brian Paden's
+example](http://stackoverflow.com/questions/267752/boost-asio-serial-port-need-help-with-io)
