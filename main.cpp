@@ -1,6 +1,7 @@
 /** 
- * 1. Write one command to serial port
- * 2. Read forever from serial port
+ * 1. Write command to serial port
+ * 2. Read response from serial port
+ * 3. Repeat
  */
 #include <iostream>
 #include <boost/asio.hpp> 
@@ -13,6 +14,7 @@ using namespace std;
 serial_port_base::baud_rate BAUD(9600);
 serial_port_base::flow_control FLOW( serial_port_base::flow_control::none );
 serial_port_base::parity PARITY( serial_port_base::parity::none );
+// serial_port_base::stop_bits STOP( serial_port_base::stop_bits::one );
 serial_port_base::stop_bits STOP( serial_port_base::stop_bits::one );
 
 int main(){
@@ -25,22 +27,23 @@ int main(){
   port.set_option( PARITY );
   port.set_option( STOP );
 
-  // Send ---------------------------------------------------------------------
-  // What to send
-  int input = 1;
-
-  // Output buffer
-  unsigned char command[1] = {0};
-
-  // Convert and send
-  command[0] = static_cast<unsigned char>( input );
-  write(port, buffer(command, 1));
-
-  // Receive ------------------------------------------------------------------
+  unsigned char input;
   char c;
   while(1){
+    // Send -------------------------------------------------------------------
+    // What to send
+    cin >> input;
+
+    // Output buffer
+    unsigned char command[1] = {0};
+
+    // Convert and send
+    command[0] = static_cast<unsigned char>( input );
+    write(port, buffer(command, 1));
+
+    // Receive response -------------------------------------------------------
     read(port,buffer(&c,1));
-    cout << c;
+    cout << c << endl;
   }
 
   return 0;
